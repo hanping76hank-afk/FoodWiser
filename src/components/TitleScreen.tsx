@@ -56,7 +56,7 @@ export default function TitleScreen({ onStart, onOpenSettings }: TitleScreenProp
           transition={{ duration: 1.5, delay: 0.3, type: 'spring' }}
           className="text-5xl md:text-7xl font-black tracking-[0.15em] mb-3 leading-tight filter drop-shadow-[0_12px_24px_rgba(107,47,160,0.3)] bg-gradient-to-br from-[#d4a853] via-[#f97316] to-[#c084fc] bg-clip-text text-transparent transform origin-center"
         >
-          幻霧尋真
+          冥願
         </motion.h1>
 
         <motion.p
