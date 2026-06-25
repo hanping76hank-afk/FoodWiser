@@ -32,7 +32,8 @@ import {
   stopBgmSound,
   playCockpitWarningSound,
   playHeartbeatSound,
-  playBgm
+  playBgm,
+  BGM_TRACKS
 } from './utils/audio';
 
 export default function App() {
@@ -273,6 +274,29 @@ export default function App() {
   // Terminal endings
   const [gameOver, setGameOver] = useState<{ isVictory: boolean; msg: string } | null>(null);
 
+  // Helper to resolve BGM track key based on scene type
+  const getBgmBySceneType = (scene: SceneType): keyof typeof BGM_TRACKS => {
+    if (scene === 'shida' || scene === 'canteen' || scene === 'cook') return 'baoshan';
+    if (scene === 'transit' || scene === 'shrine' || scene === 'shrine_plain') return 'shrine';
+    if (scene === 'ch_walking' || scene === 'ch_wandering' || scene === 'ch_welcoming' || scene === 'ch_sword') return 'ch_high';
+    if (scene === 'huayang_market' || scene === 'huayang_fight') return 'huayang';
+    if (scene === 'council') return 'council';
+    if (scene === 'zhongshan_ele') return 'zhongshan_ele';
+    if (scene === 'seafood_supermarket') return 'seafood_supermarket';
+    if (scene === 'zhongshan_soy') return 'zhongshan_soy';
+    if (scene === 'jinde') return 'jinde';
+    return 'baoshan';
+  };
+
+  // Helper to resolve combat BGM based on enemy name
+  const getBgmByEnemyName = (enemyName: string): keyof typeof BGM_TRACKS => {
+    if (enemyName.includes('尤幹')) return 'battle_uganda';
+    if (enemyName.includes('方水玉')) return 'battle_fang';
+    if (enemyName.includes('山本')) return 'battle_yamamoto';
+    if (enemyName.includes('村下')) return 'battle_murashita';
+    return 'battle_uganda';
+  };
+
   // Reactive background music controller dynamically choosing the track
   useEffect(() => {
     if (!settings.bgmOn) {
@@ -303,6 +327,32 @@ export default function App() {
       return;
     }
 
+    if (showEndingCredits) {
+      playBgm('ending');
+      return;
+    }
+
+    // 2.5. Stage Clear Popup BGM
+    if (activeStageClear !== null) {
+      const stageBgmMap: Record<number, keyof typeof BGM_TRACKS> = {
+        0: 'baoshan',
+        1: 'shrine',
+        2: 'ch_high',
+        3: 'huayang',
+        4: 'council',
+        5: 'zhongshan_ele',
+        6: 'seafood_supermarket',
+        7: 'zhongshan_soy',
+        8: 'seafood_supermarket',
+        9: 'jinde'
+      };
+      const track = stageBgmMap[activeStageClear];
+      if (track) {
+        playBgm(track);
+        return;
+      }
+    }
+
     // 3. Selection of Food overlay
     if (activeFoodEvent) {
       playBgm('food');
@@ -311,45 +361,22 @@ export default function App() {
 
     // 4. Combat / Battle BGM
     if (activeCombat) {
-      const enemy = activeCombat.enemy;
-      if (enemy.includes('尤幹')) {
-        playBgm('battle_uganda');
-      } else if (enemy.includes('方水玉')) {
-        playBgm('battle_fang');
-      } else if (enemy.includes('山本')) {
-        playBgm('battle_yamamoto');
-      } else if (enemy.includes('村下')) {
-        playBgm('battle_murashita');
-      } else {
-        playBgm('battle_uganda');
-      }
+      playBgm(getBgmByEnemyName(activeCombat.enemy));
       return;
     }
 
     // 5. Normal Story Location BGM and extra locations
-    if (sceneType === 'shida' || sceneType === 'canteen' || sceneType === 'cook') {
-      playBgm('baoshan');
-    } else if (sceneType === 'transit' || sceneType === 'shrine' || sceneType === 'shrine_plain') {
-      playBgm('shrine');
-    } else if (sceneType === 'ch_walking' || sceneType === 'ch_wandering' || sceneType === 'ch_welcoming' || sceneType === 'ch_sword') {
-      playBgm('ch_high');
-    } else if (sceneType === 'huayang_market' || sceneType === 'huayang_fight') {
-      playBgm('huayang');
-    } else if (sceneType === 'council') {
-      playBgm('council');
-    } else if (sceneType === 'zhongshan_ele') {
-      playBgm('zhongshan_ele');
-    } else if (sceneType === 'seafood_supermarket') {
-      playBgm('seafood_supermarket');
-    } else if (sceneType === 'zhongshan_soy') {
-      playBgm('zhongshan_soy');
-    } else if (sceneType === 'jinde') {
-      playBgm('jinde');
-    } else {
-      // Fallback BGM
-      playBgm('baoshan');
-    }
-  }, [settings.bgmOn, isPlaying, gameOver, activeFoodEvent, activeCombat, sceneType]);
+    playBgm(getBgmBySceneType(sceneType));
+  }, [
+    settings.bgmOn,
+    isPlaying,
+    gameOver,
+    showEndingCredits,
+    activeStageClear,
+    activeFoodEvent,
+    activeCombat,
+    sceneType
+  ]);
 
   // Global Keyboard Shortcuts Effect
   useEffect(() => {
@@ -724,6 +751,9 @@ export default function App() {
       case 'food':
         addLogEvent(`📍 口糧短缺！到達地點【${step.location}】，開始物色並配膳採取草木營養。`, 'system');
         setActiveFoodEvent({ location: step.location });
+        if (settings.bgmOn) {
+          playBgm('food');
+        }
         break;
 
       case 'grass_event':
@@ -771,6 +801,9 @@ export default function App() {
         setSpeaker(null);
         setIsNarration(true);
         setActiveCombat({ enemy: step.enemy, hp: step.hp, enemyImg: step.enemyImg || IMG.山本少尉 });
+        if (settings.bgmOn) {
+          playBgm(getBgmByEnemyName(step.enemy));
+        }
         addLogEvent(`⚔️ 警告：生死交鋒！幽魔將領【${step.enemy}】現身！與之決一死戰！`, 'alert');
         // Pre-advance to the first step of the victory plot so that we skip any "生死交鋒" blank dialog step!
         advanceDialogue();
@@ -779,8 +812,29 @@ export default function App() {
       case 'stageclear':
         if (step.stage === 9) {
           setShowEndingCredits(true);
+          if (settings.bgmOn) {
+            playBgm('ending');
+          }
         } else {
           setActiveStageClear(step.stage);
+          if (settings.bgmOn) {
+            const stageBgmMap: Record<number, keyof typeof BGM_TRACKS> = {
+              0: 'baoshan',
+              1: 'shrine',
+              2: 'ch_high',
+              3: 'huayang',
+              4: 'council',
+              5: 'zhongshan_ele',
+              6: 'seafood_supermarket',
+              7: 'zhongshan_soy',
+              8: 'seafood_supermarket',
+              9: 'jinde'
+            };
+            const track = stageBgmMap[step.stage];
+            if (track) {
+              playBgm(track);
+            }
+          }
         }
         break;
 
@@ -1926,6 +1980,10 @@ export default function App() {
                 addLogEvent(`🍏 配膳結果：${logMsg}`, energyRecovered > 0 ? 'success' : 'alert');
               }
               
+              if (settings.bgmOn) {
+                playBgm(getBgmBySceneType(sceneType));
+              }
+              
               // Proceed dialog step after ingestion complete
               setTimeout(() => {
                 advanceDialogue();
@@ -1995,11 +2053,17 @@ export default function App() {
                   hp: safeHp,
                 };
               });
+              if (settings.bgmOn) {
+                playBgm(getBgmBySceneType(sceneType));
+              }
               showToast('🏆 戰勝敵手！生命回復 2！', 'green');
               addLogEvent('🏆 戰火熄滅：戰勝敵方，奪回局勢。', 'success');
             }}
             onEscape={() => {
               setActiveCombat(null);
+              if (settings.bgmOn) {
+                playBgm(getBgmBySceneType(sceneType));
+              }
               showToast('💨 你已從戰鬥中撤退！暫時避其鋒芒。', 'orange');
               addLogEvent('💨 走為上策：在危急中脫離了戰場。', 'alert');
             }}

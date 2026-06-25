@@ -11,7 +11,7 @@ const BGM_DRIVE_IDS: Record<string, string> = {
   battle_uganda: '1SylhUEPQBI19JSJLQaAobHgrGET_n0Ze',
   battle_fang: '1OWkdjVzbnCDZxzF7XCX4UiFeWAff5yPn',
   battle_yamamoto: '1Zfp6sO76Bl5NgeMHI6Ho3SzZ6Es-4W8Y',
-  battle_murashita: '1g-8OlQUjH-pRYHCO-kefgBQIAL4Q5qsa',
+  battle_murashita: '1OWkdjVzbnCDZxzF7XCX4UiFeWAff5yPn',
   baoshan: '1WZQaww4_DVJ5tZUwsOwUHsLxZAFmIB_H',
   shrine: '1Iu-61McZQPNK-snE2Ct18avyr5zW_E3D',
   ch_high: '16oCCB3_C_6VvmvQijluw0Qz-1sK5oiqh',
@@ -272,7 +272,7 @@ async function ensureImagesDownloaded() {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Delayed background assets pre-cacher to guarantee instant port-binding and health checks
   setTimeout(() => {
