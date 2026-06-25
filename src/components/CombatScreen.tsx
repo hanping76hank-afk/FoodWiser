@@ -74,7 +74,7 @@ function StarCell({ isFilled, isLocked = false, isEnemy = false, delayIndex = 0 
   return (
     <motion.div 
       {...flyProps}
-      className="relative w-6 h-6 flex items-center justify-center"
+      className="relative w-5 h-5 flex items-center justify-center"
     >
       {/* 360-degree floating particles spray upon star break */}
       <AnimatePresence>
@@ -118,29 +118,38 @@ function StarCell({ isFilled, isLocked = false, isEnemy = false, delayIndex = 0 
         {isEnemy ? (
           /* Enemy heart representations */
           isFilled ? (
-            <span className="text-[13px] filter drop-shadow-[0_0_5px_rgba(168,85,247,0.95)] animate-pulse select-none" title="敵方生命度">
+            <span className="text-[11px] filter drop-shadow-[0_0_5px_rgba(168,85,247,0.95)] animate-pulse select-none" title="敵方生命度">
               💜
             </span>
           ) : (
-            <span className="text-[13px] filter grayscale-[1] brightness-[0.22] opacity-35 select-none" title="已擊破敵方生命度">
+            <span className="text-[11px] filter grayscale-[1] brightness-[0.22] opacity-35 select-none" title="已擊破敵方生命度">
               🖤
             </span>
           )
         ) : (
           /* Player heart representations to match play HUD */
           isFilled ? (
-            <span className="text-[13px] filter drop-shadow-[0_0_5px_rgba(239,68,68,0.95)] animate-pulse select-none" title="生命星印">
+            <span className="text-[11px] filter drop-shadow-[0_0_5px_rgba(239,68,68,0.95)] animate-pulse select-none" title="生命星印">
               ❤️
             </span>
           ) : isLocked ? (
-            <span className="text-[13px] text-[#10b981] filter drop-shadow-[0_0_3px_rgba(16,185,129,0.85)] relative select-none leading-none inline-block" title="陽氣鎖定">
-              ♥
-            </span>
-          ) : (
-            <span className="text-[13px] opacity-25 select-none" title="已折損生命星印">
-              🤍
-            </span>
-          )
+            <motion.span
+              animate={{ 
+                scale: [1, 1.15, 0.95, 1.1, 1],
+                opacity: [1, 0.85, 1]
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 3.2,
+                ease: "easeInOut",
+                delay: delayIndex * 0.15,
+              }}
+              className="text-[11px] filter drop-shadow-[0_0_4px_rgba(16,185,129,0.95)] relative select-none leading-none inline-block font-sans"
+              title="陽氣鎖定"
+            >
+              💚
+            </motion.span>
+          ) : null
         )}
       </motion.div>
     </motion.div>
@@ -698,7 +707,7 @@ export default function CombatScreen({
   };
 
   return (
-    <div id="combat-screen" className="fixed inset-0 z-40 bg-[#080206] text-[#ebd9c5] font-serif select-none flex flex-col justify-between p-4 md:p-6 overflow-hidden">
+    <div id="combat-screen" className="fixed inset-0 z-40 bg-[#080206] text-[#ebd9c5] font-serif select-none flex flex-col justify-between p-3 md:p-4 overflow-hidden">
       
       {/* Background vignette elements underlay */}
       <div className="absolute inset-x-0 inset-y-0 w-full h-full pointer-events-none z-0">
@@ -724,25 +733,25 @@ export default function CombatScreen({
       </AnimatePresence>
 
       {/* 1. TOP HEADER STATUS BOARD */}
-      <header className="relative z-10 w-full flex items-center justify-between border-b border-[#3c1e2f]/50 pb-3 select-none">
+      <header className="relative z-10 w-full flex items-center justify-between border-b border-[#3c1e2f]/50 pb-1.5 select-none">
         <div className="flex items-center gap-2">
-          <Flame className="w-5 h-5 text-rose-500 animate-pulse" />
-          <span className="text-[11px] font-sans font-bold tracking-[0.25em] text-[#f43f5e] uppercase">
+          <Flame className="w-4 h-4 text-rose-500 animate-pulse" />
+          <span className="text-[10px] font-sans font-bold tracking-[0.2em] text-[#f43f5e] uppercase">
             魔王生死之役 · 八卦山抗日古戰場 (電腦控制端)
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] font-mono text-zinc-400">
+        <div className="flex items-center gap-4 text-[9px] font-mono text-zinc-400">
           <span>靈能感知已連線</span>
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
         </div>
       </header>
 
       {/* 2. THREE-COLUMN DESKTOP SCREEN LAYOUT */}
-      <main className="relative z-10 grid grid-cols-12 gap-5 w-full max-w-6xl mx-auto flex-1 items-center py-4">
+      <main className="relative z-10 grid grid-cols-12 gap-4 w-full max-w-6xl mx-auto flex-1 items-center py-2">
         
         {/* ==================== LEFT COLUMN: OUR HUD STATE ==================== */}
-        <section className="col-span-3 flex flex-col gap-4 h-full justify-center relative">
-          <div className="bg-[#12050f]/85 border border-[#3e1d32]/60 rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.7)] flex flex-col gap-3.5 min-h-[360px] h-auto pb-4 justify-between relative overflow-hidden">
+        <section className="col-span-3 flex flex-col gap-3 h-full justify-center relative">
+          <div className="bg-[#12050f]/85 border border-[#3e1d32]/60 rounded-xl p-3 shadow-[0_8px_32px_rgba(0,0,0,0.7)] flex flex-col gap-2.5 min-h-[310px] h-auto pb-3 justify-between relative overflow-hidden">
             <div>
               <div className="border-b border-[#3e1d32]/35 pb-2 mb-3">
                 <span className="text-[9px] font-sans font-black tracking-widest text-[#fbbf24] uppercase">
@@ -759,7 +768,7 @@ export default function CombatScreen({
                   <span>生命值</span>
                   <span className="font-mono text-red-500 font-black">{playerStars} / {playerMaxHp}</span>
                 </div>
-                <div className="grid grid-cols-10 gap-x-[1px] gap-y-[1px] bg-black/40 py-2 px-1 rounded-xl border border-red-950/30 justify-items-center max-w-[260px] mx-auto w-full">
+                <div className="grid grid-cols-10 gap-x-[1px] gap-y-[1px] bg-black/40 py-1.5 px-0.5 rounded-xl border border-red-950/30 justify-items-center max-w-[260px] mx-auto w-full">
                   {Array.from({ length: playerMaxHp }).map((_, i) => {
                     let localLockedCount = 0;
                     if (heldGrass === 4) {
@@ -903,10 +912,10 @@ export default function CombatScreen({
         <section className="col-span-6 flex flex-col items-center justify-center gap-2 text-center">
           
           {/* Dial warning count overlay */}
-          <div className="w-full relative py-5 px-6 border-2 border-[#3c172d]/70 bg-[#140413]/94 rounded-3xl shadow-[inset_0_2px_25px_rgba(0,0,0,0.9),0_12px_45px_rgba(0,0,0,0.8)] flex flex-col items-center">
+          <div className="w-full relative py-3.5 px-4 border-2 border-[#3c172d]/70 bg-[#140413]/94 rounded-2xl shadow-[inset_0_2px_25px_rgba(0,0,0,0.9),0_12px_45px_rgba(0,0,0,0.8)] flex flex-col items-center">
             
             {/* Status light line */}
-            <div className="flex justify-between items-center w-full max-w-md px-1 select-none font-mono text-[10px] tracking-wider mb-2">
+            <div className="flex justify-between items-center w-full max-w-md px-1 select-none font-mono text-[9px] tracking-wider mb-1.5">
               <span className="text-[#8b7869] font-bold">對位穩定度: {Math.round((consecutiveSecs / 15) * 100)}%</span>
               <span className={isAligned ? 'text-teal-400 font-bold animate-pulse' : 'text-rose-500 font-bold'}>
                 {isAligned ? '🟢 已鎖定' : '🔴 未對位'}
@@ -914,7 +923,7 @@ export default function CombatScreen({
             </div>
 
             {/* SUPER ENLARGED DIAL POINTER GAUGE */}
-            <div id="enlarged-gauge-view" className="relative w-full max-w-md h-52 flex items-center justify-center overflow-hidden bg-[#0a0209]/60 rounded-2xl border border-[#2d0a1f]/40 px-2 pt-4 shadow-inner">
+            <div id="enlarged-gauge-view" className="relative w-full max-w-md h-40 flex items-center justify-center overflow-hidden bg-[#0a0209]/60 rounded-xl border border-[#2d0a1f]/40 px-2 pt-2 shadow-inner">
               <svg className="w-full h-full" viewBox="0 0 320 160">
                 <defs>
                   {/* Glowing shader neon grad */}
@@ -1033,8 +1042,8 @@ export default function CombatScreen({
         </section>
 
         {/* ==================== RIGHT COLUMN: THE BOSS STATE CARD ==================== */}
-        <section className="col-span-3 flex flex-col gap-4 h-full justify-center relative">
-          <div className="bg-[#12050f]/85 border border-rose-955/60 rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.7)] flex flex-col gap-3 h-[360px] justify-between relative overflow-hidden">
+        <section className="col-span-3 flex flex-col gap-3 h-full justify-center relative">
+          <div className="bg-[#12050f]/85 border border-rose-955/60 rounded-xl p-3 shadow-[0_8px_32px_rgba(0,0,0,0.7)] flex flex-col gap-2.5 h-[310px] justify-between relative overflow-hidden">
             <div>
               <div className="border-b border-rose-950/50 pb-2 mb-3">
                 <span className="text-[9px] font-sans font-black tracking-widest text-[#ef4444] uppercase">
@@ -1053,7 +1062,7 @@ export default function CombatScreen({
               </div>
 
               {/* Profile Cutout Image of the boss */}
-              <div className="relative w-full h-24 bg-black/90 rounded-xl border border-red-950/50 overflow-hidden flex items-center justify-center mb-3">
+              <div className="relative w-full h-20 bg-black/90 rounded-xl border border-red-950/50 overflow-hidden flex items-center justify-center mb-3">
                 <CutoutImage
                   src={enemyImg}
                   alt={enemyName}
@@ -1120,10 +1129,10 @@ export default function CombatScreen({
       </main>
 
       {/* 3. BOTTOM DIALOGUE BAR AREA (MOUSE/SPACE BUTTON & CHARGE METER) */}
-      <footer className="relative z-10 w-full max-w-4xl mx-auto flex flex-col gap-2 bg-[#12040f]/90 border border-[#3e1d32]/50 p-4 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.85)]">
+      <footer className="relative z-10 w-full max-w-4xl mx-auto flex flex-col gap-1.5 bg-[#12040f]/90 border border-[#3e1d32]/50 p-2.5 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.85)]">
         
         {/* Dynamic Log Textbox Banner status logs */}
-        <div className="text-[11px] font-sans text-rose-300/90 text-center h-5 flex items-center justify-center leading-none">
+        <div className="text-[10px] font-sans text-rose-300/90 text-center h-4.5 flex items-center justify-center leading-none">
           <motion.p
             key={getDialBannerStatusText()}
             initial={{ opacity: 0, y: -2 }}
@@ -1135,8 +1144,8 @@ export default function CombatScreen({
         </div>
 
         {/* Dynamic Pulse Charge Meter (能量蓄積條 - Left: 能量條, Center: 將指針維持在範圍內已蓄積能量, Right: 蓄積百分比) */}
-        <div className="flex flex-col gap-1.5 pb-2 select-none w-full border-t border-zinc-950/40 pt-2.5">
-          <div className="flex justify-between items-center text-[10.5px] font-sans text-amber-200 font-bold w-full px-1">
+        <div className="flex flex-col gap-1 pb-1 select-none w-full border-t border-zinc-950/40 pt-1.5">
+          <div className="flex justify-between items-center text-[10px] font-sans text-amber-200 font-bold w-full px-1">
             <span className="flex items-center gap-1">⚡ 完美的對位蓄積：{(consecutiveSecs).toFixed(1)} / 15.0s</span>
             <span className="text-zinc-400 font-sans font-medium">將指針維持在綠色範圍內！(蓄滿 3 秒打擊敵方生命)</span>
             <span className={`font-mono font-bold transition-colors duration-300 ${
@@ -1150,7 +1159,7 @@ export default function CombatScreen({
             </span>
           </div>
           <motion.div 
-            className={`w-full h-3 bg-[#080106] rounded-full overflow-hidden p-[1px] shadow-inner border transition-all duration-300 ${
+            className={`w-full h-2.5 bg-[#080106] rounded-full overflow-hidden p-[1px] shadow-inner border transition-all duration-300 ${
               ((accumulatedSecs / 3.0) * 100) < 30
                 ? 'border-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]'
                 : 'border-zinc-800'
@@ -1195,7 +1204,7 @@ export default function CombatScreen({
           onTouchStart={(e) => { e.preventDefault(); handlePointerDown(); }}
           onTouchEnd={(e) => { e.preventDefault(); handlePointerUp(); }}
           disabled={isWon || isLost}
-          className={`w-full py-4 rounded-xl font-black font-sans uppercase tracking-[0.3em] text-xs relative overflow-hidden transition-all select-none cursor-pointer border ${
+          className={`w-full py-2.5 rounded-lg font-black font-sans uppercase tracking-[0.3em] text-xs relative overflow-hidden transition-all select-none cursor-pointer border ${
             isWon || isLost
               ? 'bg-zinc-950/90 border-zinc-900 text-zinc-640 cursor-not-allowed'
               : isPressing

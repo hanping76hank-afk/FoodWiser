@@ -16,21 +16,57 @@ interface InventoryPanelProps {
 }
 
 export default function InventoryPanel({ isOpen, onClose, inventory, weapons }: InventoryPanelProps) {
-  // Combine custom weapons and generic inventory tags with visual icons
-  const allItems = [
-    ...inventory,
-    ...weapons.map((w) => {
-      if (w === '木棍') return '木棍 🪵';
-      if (w === '鐵鍋') return '鐵鍋 🍳';
-      if (w === '生鏽武士刀') return '生鏽武士刀 ⚔️';
-      if (w === '儀仗劍' || w.includes('儀仗')) return '儀仗劍 🗡️';
-      if (w === '雲紫骨扇' || w.includes('骨扇') || w.includes('雲紫')) return '雲紫骨扇 🪭';
-      return `${w} 📦`;
-    }),
-  ];
+  // Normalize items to prevent duplicates and standardise emojis
+  const getNormalizedItem = (rawItem: string): { name: string; emoji: string } => {
+    // Strip existing emojis/icons or blank spaces to get the pure name
+    let name = rawItem.replace(/[\s\u2000-\u3300\ud83c-\udfff\ud83d\ud83e\ud83f\ufe0f]/g, '').trim();
+    if (!name) name = rawItem.trim();
 
-  // De-duplicate items for cleaner display
-  const uniqueItems = Array.from(new Set(allItems));
+    let emoji = '📦';
+    if (name.includes('探測機')) {
+      name = '探測機';
+      emoji = '🔍';
+    } else if (name === '木棍') {
+      emoji = '🪵';
+    } else if (name === '鐵鍋') {
+      emoji = '🍳';
+    } else if (name.includes('武士刀') || name.includes('生鏽武士刀')) {
+      name = '生鏽武士刀';
+      emoji = '⚔️';
+    } else if (name.includes('儀仗')) {
+      name = '儀仗劍';
+      emoji = '🗡️';
+    } else if (name.includes('骨扇') || name.includes('雲紫')) {
+      name = '雲紫骨扇';
+      emoji = '🪭';
+    } else if (name.includes('蒼影丸')) {
+      name = '蒼影丸';
+      emoji = '🗡️';
+    } else if (name.includes('青龍黃虎劍')) {
+      name = '青龍黃虎劍';
+      emoji = '⚔️';
+    } else if (name.includes('禾火草')) {
+      name = '禾火草';
+      emoji = '🌿';
+    }
+
+    return { name, emoji };
+  };
+
+  // Build the unique map of item name -> emoji
+  const uniqueMap = new Map<string, string>();
+
+  inventory.forEach((item) => {
+    const norm = getNormalizedItem(item);
+    uniqueMap.set(norm.name, norm.emoji);
+  });
+
+  weapons.forEach((item) => {
+    const norm = getNormalizedItem(item);
+    uniqueMap.set(norm.name, norm.emoji);
+  });
+
+  const uniqueItems = Array.from(uniqueMap.entries()).map(([name, emoji]) => ({ name, emoji }));
 
   return (
     <AnimatePresence>
@@ -70,10 +106,6 @@ export default function InventoryPanel({ isOpen, onClose, inventory, weapons }: 
               {uniqueItems.length > 0 ? (
                 <div className="grid grid-cols-2 gap-3.5">
                   {uniqueItems.map((item, idx) => {
-                    const parts = item.split(' ');
-                    const icon = parts[parts.length - 1];
-                    const name = parts.slice(0, parts.length - 1).join(' ') || item;
-
                     return (
                       <motion.div
                         key={`item-${idx}`}
@@ -81,10 +113,10 @@ export default function InventoryPanel({ isOpen, onClose, inventory, weapons }: 
                         className="flex flex-col items-center justify-center p-3.5 border border-[#2a152d] bg-[#1a0e1b]/70 rounded-lg text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
                       >
                         <span className="text-2xl filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] mb-1.5 transform group-hover:scale-110 transition-transform">
-                          {icon || '💼'}
+                          {item.emoji}
                         </span>
                         <span className="text-xs text-[#e8ddd0] font-sans font-medium tracking-wide">
-                          {name}
+                          {item.name}
                         </span>
                       </motion.div>
                     );

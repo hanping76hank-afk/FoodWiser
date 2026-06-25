@@ -20,6 +20,7 @@ import ScanPopup from './components/ScanPopup';
 import GrassPopup from './components/GrassPopup';
 import InventoryPanel from './components/InventoryPanel';
 import GameOverScreen from './components/GameOverScreen';
+import EndingCredits from './components/EndingCredits';
 import CutoutImage from './components/CutoutImage';
 import { 
   playClickSound, 
@@ -267,6 +268,7 @@ export default function App() {
   const [activeCombat, setActiveCombat] = useState<{ enemy: string; hp: number; enemyImg: string } | null>(null);
   const [activeStageClear, setActiveStageClear] = useState<number | null>(null);
   const [pendingStageTransition, setPendingStageTransition] = useState<number | null>(null);
+  const [showEndingCredits, setShowEndingCredits] = useState<boolean>(false);
   
   // Terminal endings
   const [gameOver, setGameOver] = useState<{ isVictory: boolean; msg: string } | null>(null);
@@ -639,12 +641,19 @@ export default function App() {
       setTimeout(() => {
         advanceDialogue();
       }, 120);
+    } else if (cleared === 8) {
+      // Load STAGE 9 (進德校區)
+      setCurrentStage(9);
+      setStepIndex(0);
+      currentStageRef.current = 9;
+      stepIndexRef.current = 0;
+      setSceneType('jinde');
+      setTimeout(() => {
+        advanceDialogue();
+      }, 120);
     } else {
       // Final Victory complete!
-      triggerGameOver(
-        true,
-        '<b>✨ 乙未異變 · 八卦破曉真結局達成！ ✨</b><br /><br />在你們英勇的配合、探測和堅韌的抗擊下，彰化師大寶山校區、學食大堂、八卦軍人忠靈祠、彰化高中、華陽市場、彰化縣議會、中山國小、海鮮店、中山豆漿店以及喜美超市被徹底淨化！山本少尉、方水玉、村下速志中佐與木島的怨魂執念終得安息超昇，不再霍亂人間。<br /><br />你們守住了心愛的人，也守住了校園的安寧與和平。<br /><br /><b>感謝您的細心玩賞與操作！</b>'
-      );
+      setShowEndingCredits(true);
     }
   };
 
@@ -768,7 +777,11 @@ export default function App() {
         break;
 
       case 'stageclear':
-        setActiveStageClear(step.stage);
+        if (step.stage === 9) {
+          setShowEndingCredits(true);
+        } else {
+          setActiveStageClear(step.stage);
+        }
         break;
 
       default:
@@ -840,6 +853,7 @@ export default function App() {
     currentStageRef.current = 0;
     stepIndexRef.current = 0;
     setGameOver(null);
+    setShowEndingCredits(false);
     setIsPlaying(false);
 
     // Explicitly reset on-screen event states and active CGs
@@ -2005,108 +2019,141 @@ export default function App() {
 
       {/* H. CHAPTER COMPLETE STAGE BOX */}
       <AnimatePresence>
-        {activeStageClear !== null && (
-          <div className="fixed inset-0 z-50 bg-[#050305]/98 text-center font-serif flex flex-col items-center justify-center p-6 select-none overflow-hidden">
-            {/* Immersive background image underlay based on the cleared stage */}
-            <img
-              src={activeStageClear === 0 ? IMG.過關途中 : activeStageClear === 1 ? IMG.趕路 : activeStageClear === 2 ? IMG.戰勝山本 : IMG.華陽市場}
-              alt="Stage Clear Background"
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none scale-105 transition-opacity duration-1000"
-              style={{ 
-                filter: 'brightness(0.35) saturate(0.8) contrast(1.1) blur(0.5px)'
-              }}
-            />
-            {/* Background accent glow */}
-            <div className="absolute inset-0 bg-radial-at-c-b from-[#251542]/25 via-transparent to-transparent pointer-events-none" />
+        {activeStageClear !== null && (() => {
+          const romanNumerals = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'];
+          const stageClearCgs = [
+            IMG.過關途中, // Stage 0
+            IMG.趕路,     // Stage 1
+            IMG.戰勝山本, // Stage 2
+            IMG.華陽市場, // Stage 3
+            IMG.議會背景, // Stage 4
+            IMG.過關途中, // Stage 5
+            IMG.過關途中, // Stage 6
+            IMG.過關途中, // Stage 7
+            IMG.過關途中, // Stage 8
+            IMG.過關途中, // Stage 9
+          ];
+          const stageClearTexts = [
+            {
+              title: '第一關完成：師大校區、新冒險開啟！',
+              desc: '帶著探測機與重型純鑄大鐵鍋，四個夥伴堅定地邁出了彰師大的校區牌坊。眼見前方古木蕭索、山谷黑紫色濃霧如同巨浪，一隻百年冤魂的咆哮從「彰化軍人忠靈祠」的方向隱隱震響。前方還有怎樣的宿怨與惡鬥在等待著大家？'
+            },
+            {
+              title: '第二關完成：超淨怨氣、迎接新天！',
+              desc: '山本少尉戰死百年的幽魔厲靈，在村民起義戰士與英勇英靈的金色金光怒潮下終告平息。怨結驅散、山風吹拂，忠靈祠恢復了一片乾淨。而安婷、夢恩、秉任和翰倫正要往彰化高中繼續前進，查探異變的餘波……'
+            },
+            {
+              title: '第三關完成：查探真相、轉入鬧市！',
+              desc: '大家成功查明了部分異變原因。在經歷了彰化高中的對話和探索後，為繼續清算邪煞之源，四人準備經過人氣喧囂的華陽市場！市場內正因危機而混亂一片，各色人等搶奪食物與資源。他們能否在混亂的集市中找到安立之所？'
+            },
+            {
+              title: '第四關完成：市場突圍、前進議會！',
+              desc: '在華陽市場的喧擾與推擠中，四人終於克制了食肆瘴氣、避開了打鬥中的人群。看著眼前逐漸平息的騷亂，四人深深吸一口氣，將希望的目光投向了彰化縣議會！'
+            },
+            {
+              title: '第五關完成：議會洗禮、前進中山！',
+              desc: '議會大廳內的政治瘴氣與妖霧被正義與禾火草之光徹底驅散。雖然受到了許多阻撓，但四人的決心更加堅定，他們繼續前行，前往中山國小探尋更多的線索。'
+            },
+            {
+              title: '第六關完成：中山啟迪、深海謎團！',
+              desc: '在中山國小內，我們突破了童趣瘴氣與邪靈的包圍。為獲取海味補給並找尋老闆柯少獅，四人走進了街角的海鮮店。這裡瀰漫著神祕的美人魚氣息……'
+            },
+            {
+              title: '第七關完成：海鮮突圍、晨光豆漿！',
+              desc: '海鮮店的幻象與美人魚的誘惑被英勇識破。老闆柯少獅給予了指引。四人繼續前進，來到了彰化街頭熱氣騰騰的中山豆漿店，享受溫暖的早點補給。'
+            },
+            {
+              title: '第八關完成：豆漿溫暖、超市補給！',
+              desc: '吃飽喝足，豆漿店的熱氣驅散了體內的寒瘴。前方的進德校區已經近在咫尺，但在踏入之前，喜美超市是最後的物資與裝備補給點。'
+            },
+            {
+              title: '第九關完成：超市啟示、終焉決戰！',
+              desc: '在喜美超市中，我們得到了姜鳳興老將軍贈予的「青龍黃虎劍」。然而木島（楊鴞恩）的陰謀也徹底暴露，姜老先生為國捐軀。握緊手中的寶劍，進德校區（終章）的大門已在眼前！'
+            }
+          ];
+          return (
+            <div className="fixed inset-0 z-50 bg-[#050305]/98 text-center font-serif flex flex-col items-center justify-center p-6 select-none overflow-hidden">
+              {/* Immersive background image underlay based on the cleared stage */}
+              <img
+                src={stageClearCgs[activeStageClear] || IMG.過關途中}
+                alt="Stage Clear Background"
+                referrerPolicy="no-referrer"
+                className="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none scale-105 transition-opacity duration-1000"
+                style={{ 
+                  filter: 'brightness(0.35) saturate(0.8) contrast(1.1) blur(0.5px)'
+                }}
+              />
+              {/* Background accent glow */}
+              <div className="absolute inset-0 bg-radial-at-c-b from-[#251542]/25 via-transparent to-transparent pointer-events-none" />
 
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-sm flex flex-col items-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-400 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.2)] flex items-center justify-center mb-6 font-sans text-xl font-black">
-                {activeStageClear === 0 ? 'Ⅰ' : activeStageClear === 1 ? 'Ⅱ' : activeStageClear === 2 ? 'Ⅲ' : 'Ⅳ'}
-              </div>
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                className="w-full max-w-sm flex flex-col items-center"
+              >
+                <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-400 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.2)] flex items-center justify-center mb-6 font-sans text-xl font-black">
+                  {romanNumerals[activeStageClear] || '★'}
+                </div>
 
-              <h2 className="text-2xl font-black text-amber-300 tracking-[0.2em] pl-[0.2em] mb-4">
-                關卡完成
-              </h2>
+                <h2 className="text-2xl font-black text-amber-300 tracking-[0.2em] pl-[0.2em] mb-4">
+                  關卡完成
+                </h2>
 
-              <div className="w-full bg-[#110912]/75 border border-[#3d2040]/35 rounded-xl p-5 mb-8 text-left text-xs md:text-sm text-[#e8ddd0]/90 leading-relaxed font-sans shadow-inner">
-                {activeStageClear === 0 ? (
-                  <>
-                    <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">第一關完成：師大校區、新冒險開啟！</p>
-                    帶著探測機與重型純鑄大鐵鍋，四個夥伴堅定地邁出了彰師大的校區牌坊。
-                    <br /><br />
-                    眼見前方古木蕭索、山谷黑紫色濃霧如同巨浪，一隻百年冤魂的咆哮從「彰化軍人忠靈祠」的方向隱隱震響。前方還有怎樣的宿怨與惡鬥在等待著大家？
-                    <br /><br />
-                    <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
-                  </>
-                ) : activeStageClear === 1 ? (
-                  <>
-                    <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">第二關完成：超淨怨氣、迎接新天！</p>
-                    山本少尉戰死百年的幽魔厲靈，在村民起義戰士與英勇英靈的金色金光怒潮下終告平息。
-                    <br /><br />
-                    怨結驅散、山風吹拂，忠靈祠恢復了一片乾淨。而安婷、夢恩、秉任和翰倫正要往彰化高中繼續前進，查探異變的餘波……
-                    <br /><br />
-                    <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
-                  </>
-                ) : activeStageClear === 2 ? (
-                  <>
-                    <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">第三關完成：查探真相、轉入鬧市！</p>
-                    大家成功查明了部分異變原因。在經歷了彰化高中的對話和探索後，為繼續清算邪煞之源，四人準備經過人氣喧囂的華陽市場！
-                    <br /><br />
-                    市場內正因危機而混亂一片，各色人等搶奪食物與資源。他們能否在混亂的集市中找到安立之所？
-                    <br /><br />
-                    <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
-                  </>
-                ) : (
-                  <>
-                    <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">第四關完成：市場突圍、前進進德！</p>
-                    在華陽市場的喧擾與推擠中，四人終於克制了食肆瘴氣、避開了打鬥中的人群。
-                    <br /><br />
-                    看著眼前逐漸平息的騷亂，四人深深吸一口氣，將希望的目光投向了最終的目的地——進德校區！
-                    <br /><br />
-                    <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
-                  </>
-                )}
-              </div>
+                <div className="w-full bg-[#110912]/75 border border-[#3d2040]/35 rounded-xl p-5 mb-8 text-left text-xs md:text-sm text-[#e8ddd0]/90 leading-relaxed font-sans shadow-inner">
+                  {stageClearTexts[activeStageClear] ? (
+                    <>
+                      <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">
+                        {stageClearTexts[activeStageClear].title}
+                      </p>
+                      {stageClearTexts[activeStageClear].desc}
+                      <br /><br />
+                      <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-bold text-amber-400 mb-2 border-b border-amber-955/20 pb-1">關卡完成！</p>
+                      你成功攻克了這個地區的挑戰！前方充滿著更多未知的秘密，繼續前行吧！
+                      <br /><br />
+                      <span className="text-emerald-400 font-bold">★ 通關餽贈：生命回復 2！</span>
+                    </>
+                  )}
+                </div>
 
-              <div className="w-full flex justify-center">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    const cleared = activeStageClear;
-                    setActiveStageClear(null);
+                <div className="w-full flex justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      const cleared = activeStageClear;
+                      setActiveStageClear(null);
 
-                    // Restate energy/hp parameters on stage transitions (heal 2 HP, but do NOT increase max limits or award permanent stars)
-                    setState((p) => {
-                      const bonusHp = Math.min(p.maxHp - p.lockedHearts, p.hp + 2);
-                      const cost = p.grass === 5 ? 70 : 65;
-                      const transitEnergy = Math.max(0, p.energy - cost);
-                      return {
-                        ...p,
-                        hp: bonusHp,
-                        energy: transitEnergy,
-                      };
-                    });
+                      // Restate energy/hp parameters on stage transitions (heal 2 HP, but do NOT increase max limits or award permanent stars)
+                      setState((p) => {
+                        const bonusHp = Math.min(p.maxHp - p.lockedHearts, p.hp + 2);
+                        const cost = p.grass === 5 ? 70 : 65;
+                        const transitEnergy = Math.max(0, p.energy - cost);
+                        return {
+                          ...p,
+                          hp: bonusHp,
+                          energy: transitEnergy,
+                        };
+                      });
 
-                    // Queue transition and open He-Huo-Cao query screen!
-                    setPendingStageTransition(cleared);
-                    setActiveGrassEvent(true);
-                  }}
-                  id="continue-stage-btn"
-                  className="py-2.5 px-10 bg-gradient-to-r from-amber-600 to-amber-500 border border-amber-400/35 text-amber-50 font-serif text-sm font-bold tracking-[0.25em] cursor-pointer rounded-lg shadow-lg text-center flex items-center justify-center"
-                >
-                  繼續前進
-                </motion.button>
-              </div>
-            </motion.div>
-          </div>
-        )}
+                      // Queue transition and open He-Huo-Cao query screen!
+                      setPendingStageTransition(cleared);
+                      setActiveGrassEvent(true);
+                    }}
+                    id="continue-stage-btn"
+                    className="py-2.5 px-10 bg-gradient-to-r from-amber-600 to-amber-500 border border-amber-400/35 text-amber-50 font-serif text-sm font-bold tracking-[0.25em] cursor-pointer rounded-lg shadow-lg text-center flex items-center justify-center"
+                  >
+                    繼續前進
+                  </motion.button>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })()}
       </AnimatePresence>
 
       {/* J. INVENTORY PANEL MODAL */}
@@ -2125,6 +2172,13 @@ export default function App() {
             message={gameOver.msg}
             onRestart={restartAndReset}
           />
+        )}
+      </AnimatePresence>
+
+      {/* Cinematic End Credits Screen */}
+      <AnimatePresence>
+        {showEndingCredits && (
+          <EndingCredits onRestart={restartAndReset} />
         )}
       </AnimatePresence>
 

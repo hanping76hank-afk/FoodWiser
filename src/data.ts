@@ -9,7 +9,7 @@ export const IMG = {
   // Characters
   安婷: 'https://lh3.googleusercontent.com/d/1tUD84UD3KnHlG0XnivOJuJ764Zjt7SmM',
   秉任: 'https://lh3.googleusercontent.com/d/1IrCnyHwEFsU4q5haUtjG5_F0Fo8Pr3nm',
-  夢恩: 'https://lh3.googleusercontent.com/d/1T3w2dowcbqrKDOXUlpXRQQVseEBcvXTo',
+  夢恩: 'https://lh3.googleusercontent.com/d/1666wYImRgmyA4NayQV6HsGqCzUbXuVcL',
   翰倫: 'https://lh3.googleusercontent.com/d/1J2_r5bBFtGDhD2oh6Wz5IBf4RU113R6o',
   山本少尉: 'https://lh3.googleusercontent.com/d/1Prq2HCsgg2AaNVlVR9SuRlQFLiC9kPPV',
   
@@ -632,6 +632,10 @@ item: '邪氣探測機',
     {
       type: 'setscene',
       scene: 'huayang_fight'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1pwR6mnTWSZwv4jTNLAZ1CFZXdVM5vL96'
     },
     {
       type: 'narration',
@@ -1325,6 +1329,415 @@ item: '邪氣探測機',
       type: 'stageclear',
       stage: 8
     }
+  ],
+  // ---- STAGE 9: 進德校區（終章） ----
+  [
+    {
+      type: 'setscene',
+      scene: 'jinde'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1zpdslu24fUDzCx_ybLWXtbV2rlehIm9l'
+    },
+    {
+      type: 'narration',
+      text: '四人終於到了進德校區，踏入大門，學校樓牆傾圮，儼然廢墟，與去日相差甚遠，而天色暗沉，紫黑之雲密佈，空氣中瀰漫著足以讓人窒息的瘴氣份量，更是顯示了此地危機重重。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '翰倫',
+      text: '「瘴氣發源地……我們終於抵達了…….」'
+    },
+    {
+      type: 'narration',
+      text: '四人趕快趕去學餐那裡，搶食僅存的一點口糧。'
+    },
+    {
+      type: 'food',
+      location: '進德校區'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/15qWndWc6bpZdq0YOWde1v9X32LhBQpYp'
+    },
+    {
+      type: 'narration',
+      text: '四人終於填飽肚子，慢慢走進校園中心，靠近那顆被砍倒的樹，那棵樹雖然被砍倒，但是周遭散發出驚人的瘴氣，四人驚訝之餘，危機已經悄悄來臨，旁邊一根粗大的殘木突然斷裂，往他們方向倒下，夢恩及時揮出那把雲紫骨扇，才讓樹木碎裂崩解，不讓四人受傷，在樹木崩解之後大量的灰燼瀰漫而出，四人望著樹木的殘根，一陣煙霧瀰漫之後，一個身影從灰燼中緩緩現身，待到灰塵散盡之時，大家也是看清了他的面貌，是一名中年男子身著西裝，微微駝背，微笑的看著四人，秉任看清楚來者之後，大驚失色，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '秉任',
+      text: '「你......你不就是彰中的顏校長嗎？！為何會出現在這裡？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '顏校長',
+      text: '「四位可真是彰化乃至於全台灣的英雄啊......不知道來到終點站的感想如何？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '安婷',
+      text: '「難怪我一直感覺到一股視線......原來就是你在跟蹤嗎？你的目的到底是什麼？想阻止我們，讓台灣陷入一片荒蕪嗎？！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '顏校長',
+      text: '「喔，不對不對，我可是很愛台灣的，這方土地養我育我，怎麼可能做出出格的事？這只是我們小小計劃的一環罷了。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '夢恩',
+      text: '「你這就是出格了！説！這起異變到底是不是你引發的！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '顏校長',
+      text: '「要怪就怪你們校長太單純吧......我只是略施小計，他就乖乖的幫我把那棵百年老樹砍掉，省得我再費心，還真是貼心啊。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '翰倫',
+      text: '「你的目的到底是什麼！」'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1Ws8v8nUxF2BaU-gff2PH5rYAQoN-KM8P'
+    },
+    {
+      type: 'narration',
+      text: '還沒等到顏校長回答，一支箭矢破空穿雲而來，勢如奔雷，來勢洶洶，但是卻被顏校長輕易抓住，緊跟箭後的是一個粗獷的漢子，四人定睛一看，原來是海鮮店的老闆柯少獅，他跨著流星大步飛奔而來，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「木島！！還不速速受死！！！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '安婷',
+      text: '「木島？難道就是村上中佐説的『木島先生』？他就是顏校長？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「什麼鹽不鹽，糖不糖的我不知道，他就是這場異變的元兇——木島田律！我跟他本來不是同一個時代的人，因為我在抗日之時就已身亡，但是在921大爆發時，那時我們第一次照面，才知道這人的底細。他是日軍很倚賴的將領，同時也是足智多謀的軍師，在東南亞戰場和太平洋戰場積極的表現，侵略很多地方，為日軍立了大功，後來被美軍圍困於呂宋，被美國將軍抓起來，好像被當作男寵，之後......」'
+    },
+    {
+      type: 'narration',
+      text: '柯少獅尚未說完，就被木島散發出的殺氣強制打斷了，他現在已經變身成那時與姜鳳興交手的衣著，即是身著儒服，佩戴著武士刀的古風小生，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '木島',
+      text: '「説完你的遺言了嗎......呵，不對，你已經死過一次了......而且就算是你，也只有了解到我的冰山一角罷了，你又能知道我的多少？」'
+    },
+    {
+      type: 'narration',
+      text: '『少』字語音剛落，木島已經奔至柯少獅面門前，一記居合拔刀揮出，被瞠目豎眉的柯少獅用雙斧擋下，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「姦爾娘！給我再去一次地獄吧！」'
+    },
+    {
+      type: 'narration',
+      text: '兩人迅速見招拆招，一時打得難分難解，電光石火間，已過了十幾回合，只見刀光斧影，鏗鏘之聲不絕於耳，四人都看呆了，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '秉任',
+      text: '「我們趁現在趕快去找到那顆樹吧，這樣才能解決根源！」'
+    },
+    {
+      type: 'narration',
+      text: '但是當四人準備開溜之時，柯少獅也慢慢居於下風，漸漸抵擋不了木島的凌厲攻勢，雙手持斧動作逐漸凌亂起來，身上的刀傷也越來越多，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「哼，縱使要賠上這條賤命，我也不會讓你越一步雷池的！你這個四腳仔！」'
+    },
+    {
+      type: 'narration',
+      text: '木島露出一個微妙的笑容，眼珠子轉了一圈，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '木島',
+      text: '「嗯......？四腳仔嗎......？這可不對呦，我可是正港的台灣人啊......」'
+    },
+    {
+      type: 'narration',
+      text: '柯少獅愣了一下，手沒拿穩斧頭，被木島攻破防線，一隻手臂被俐落的斬斷，錐心之痛傳遍身體各處，他勉強用意志力撐著，不至跪地，但是還是痛苦地哀嚎，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「啊......你這個可惡的傢伙！竟然是三腳仔......明明是台灣人，為何還為虎作倀......！」'
+    },
+    {
+      type: 'narration',
+      text: '木島冷眼看著柯少獅，武士刀戳進他的右肺，還攪弄了一下，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '木島',
+      text: '「愚昧，能效忠皇軍是多麼無上的光榮，你們這群暴民當然是不會理解的......竟敢還癡心妄想要阻止皇軍大業？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '柯少獅',
+      text: '「可惡......都已經過了多久了，為何還在執著於復興大日本帝國......？這群臭狗有這麼直得被侍奉嗎......！？」'
+    },
+    {
+      type: 'narration',
+      text: '木島沒有回應柯少獅，直接一刀斬下他的首級，夢恩看到不禁尖叫起來。'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1kbeNqp98r8GWPNmuTSRGvxFMwCknUOqN'
+    },
+    {
+      type: 'narration',
+      text: '木島不看柯少獅的屍體一眼，徑直走向四人，武士刀上鮮血緩緩滴落在地，秉任和翰倫挺身而出，分別拔出蒼影丸和青龍黃虎劍，想要與之抗衡。但是安婷又站到二人面前，質問木島，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '安婷',
+      text: '「等一下，剛剛你和柯將軍的對話，我可不能當作沒聽到，你身為台灣人，爲何要幫日本人？過了這麼久，爲何還是如此執著？你的真面目到底是誰？顏校長、木島田律，到底哪個才是真正的你？」'
+    },
+    {
+      type: 'narration',
+      text: '木島愣了一會，仰天笑了幾聲，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '木島',
+      text: '「哈哈哈哈......不錯，真不錯......有膽識的女孩，讓我告訴你吧......你們應該也跟他交手過了，你再看看你旁邊的男的，應該叫做秉任吧，仔細端詳我們的臉吧......」'
+    },
+    {
+      type: 'narration',
+      text: '安婷對照了一下秉任和木島的臉，看了半晌，倏地了解了，她面色鐵青的看著木島，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '安婷',
+      text: '「不會吧......難道你就是......」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '木島',
+      text: '「哈哈哈！聰明的女孩！沒錯，小生就是楊鴞恩，字勤閔，大日本帝國陸軍第十四軍第四十八師團大佐，木島田律，也是在一個月前奪舍了彰化高中的顏校長。」'
+    },
+    {
+      type: 'narration',
+      text: '四人聽到大受震撼，不敢相信眼前的千面人就是楊鴞恩，方水玉的伴侶。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '夢恩',
+      text: '「不可置信......你這個負心漢竟然還有種出現在我們眼前，不對，你那時為什麼沒有去幫方水玉一起抵抗我們？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「哼，我可沒義務去救那個廢物，我們早就在82年前的那個夏夜恩斷義絕了，而且我也受不了他的死纏爛打和情緒轟炸，他只是我的一個玩物罷了。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '翰倫',
+      text: '「喂！台奸！說這麼多，為何還是跟人家一起同居，甚至還把兩家關係搞成如此不好？」'
+    },
+    {
+      type: 'narration',
+      text: '楊鴞恩一時語塞，臉上一陣青一陣白，頭上直冒青筋，惱怒的他又衝上來要去對付四人，忽然天搖地動，讓五人都站不穩，地上也出現一道道的縫隙，'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1VjcMxJJsRZZCMQEj2PJyAEk6uT7sKR27'
+    },
+    {
+      type: 'dialogue',
+      speaker: '翰倫',
+      text: '「哇哇哇，這又是搞哪齣啊！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '安婷',
+      text: '「你們看！那裡好像出現了什麼！」'
+    },
+    {
+      type: 'narration',
+      text: '其他三人和楊鴞恩一齊往那裡看去，只見房屋傾倒，牆垣磚瓦散落一地，從樹根下鑽出一大胖鬼，身高250有餘，體重150不只，高大魁梧、體型肥碩、膀大腰圓、肥頭大耳、身膚黝黑、手持長矛、渾身散發著濃烈的瘴氣，上身不著半縷，只有下身一條破布褲，樣貌極其醜陋猥瑣，楊鴞恩看到他，眉頭緊蹙，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「這是......？尤幹·達爾朵，外號『泰雅兆銘』......？我可沒預料到他會來......」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '尤幹·達爾朵',
+      text: '「喂！這不是我們木島大人嗎？怎麼來我這裡了？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「什麼你這裡？彰化可是我的老本營，明明計劃上沒有你的啊......？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '尤幹·達爾朵',
+      text: '「是老蔡腳我來的！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「老蔡？應該是蔡堂祿吧？明明他正在跟正田討論事成之後的事項才對啊......？不管了，這裡由我來辦就足夠了。達爾朵，你先去台北保護石大人和蔡大人吧，這裡由我解決就好。」'
+    },
+    {
+      type: 'narration',
+      text: '楊鴞恩話才剛說完，達爾朵身體便開始抖動，嘴裡還在自言自語，好似進入癲狂狀態，楊鴞恩自覺不妙，'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「喂！尤幹·達爾朵！在幹嘛？還不服從指令！」'
+    },
+    {
+      type: 'narration',
+      text: '誰知達爾朵已經雙眼發紅，進入狂暴狀態，充耳不聞身旁事，只看有一個人對他頤指氣使，一個暴怒，把楊鴞恩抓起來往地上重重一摔，半截身子都被摔入土裡了，四人看到達爾朵如此瘋狂，開始拿起武器，準備最後的殊死決戰。'
+    },
+    {
+      type: 'combat',
+      enemy: '尤幹·達爾朵',
+      hp: 9,
+      enemyImg: 'https://lh3.googleusercontent.com/d/1VjcMxJJsRZZCMQEj2PJyAEk6uT7sKR27'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/12QuHEm8VQP_JJJNF8mC2yonzF92e-s6m'
+    },
+    {
+      type: 'narration',
+      text: '四人經過一番艱辛苦戰，終於戰勝達爾朵，達爾朵全身都是傷，體力不支，長矛也斷成兩截了，還多處傷口血流不止。他倒在那棵被砍到只剩樹根的殘樹上，然後身體開始吸收著空氣中的瘴氣，身軀越來越膨脹，尤其是肚子最為明顯，楊鴞恩不知道何時從土裡爬了起來，拍拍身上的泥土，無奈的看著達爾朵。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「唉，一切都完了，我們的計劃都泡湯了......這些瘴氣接下來就只能被達爾朵慢慢吸收了，這個貪婪的傢伙......」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '楊鴞恩',
+      text: '「這傢伙好吃懶做，也不知是好是壞，老天讓他有如此奇葩的身軀，他的外號是『泰雅兆銘』，因為當初原住民族反抗日本時，就是日本的軍官將他策反，讓他率領族人背叛同族，落了個互相廝殺的悲劇，而他還因此沾沾自喜，以此來依傍權勢，讓他更是肆無忌憚，貪得無厭，最後在二戰期間的一次大轟炸，他被燃燒彈擊中，命喪黃泉。」'
+    },
+    {
+      type: 'narration',
+      text: '語畢，楊鴞恩走向達爾朵，想從他口中套出一些資訊，怎料達爾朵身體膨脹速度過快， 當楊鴞恩走到達爾朵身旁時，達爾朵的身軀應聲炸裂，發出強烈的爆鳴聲，同時也把楊鴞恩一併炸死了，兩人皆屍骨無存。眼見這些壞人皆已伏首，秉任、翰倫、夢恩、安婷四人也終於放下心中的巨擔，輕鬆許多，在進德校區內的倖存者，看到主謀已死，紛紛圍過來大喊：「大英雄！大英雄！」眾人望著慢慢放晴的天空，享受著被短暫忘卻的新鮮空氣，雖然家園破破爛爛，但是同心協力定能回復如初。'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1nHB9yxvWhX7iOKh2C1sXsTSPedqaQnS9'
+    },
+    {
+      type: 'narration',
+      text: '四人在寶山臨時校舍住下了，他們因為解決了這場異變，拯救了彰化乃至於台灣，所以四人皆上台領獎，他們臉上的笑容如此燦爛，後來他們四人成立『彰化紅霧異變對策委員會』，接續著他們的精神和意志，然後傳授那段不該被遺忘的歷史，但是更高興的是發自內心的善念和成就感。他們以後也許會回味這段奇幻的旅程，談論著山本少尉和村下中佐的無禮和倔強；回想起方水玉的怪奇與松蟲草香；暗自感謝英勇的魂魄柯少獅與姜鳳興；深思楊鴞恩的武藝和城府；抑或是尤幹·達爾朵的莽撞與肥滿，更有可能是......在途中看到、聽到的普通市民、學生們，他們的恐懼、反應行為、閃亮而堅定的眼神，就如同成功解決異變的四人一樣......。'
+    },
+    {
+      type: 'cg',
+      img: 'https://lh3.googleusercontent.com/d/1zqHVjH3qBp5TqECtbIPmtItFQW_Z1vMK'
+    },
+    {
+      type: 'narration',
+      text: '在不知某處的大樓裡，一名身穿西裝的年輕職員正急忙地快步往理事長室趕去。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '職員',
+      text: '「石理事長，這次又失敗了......」'
+    },
+    {
+      type: 'narration',
+      text: '理事長室各處物品都擺放的井井有條，在向北的那側牆面，掛了一幅旭日旗，石理事長年事已高、滿頭白髮、皺紋纏身、戴個眼鏡，雖然身體較為虛弱，但是心態卻比年輕小伙穩重許多；隨然有近視加上老花退化，但是眼鏡下的眼睛仍然和年輕時堅定有神，甚至更多了分深沈。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「報告全部的情況吧。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '職員',
+      text: '「報告理事長，我方成員山本太一郎少尉、方水玉、村下速志中佐、尤幹·達爾朵皆殞命，無一生還，瘴氣也還來不及擴散，就被失控的達爾朵吸收完了。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「明明有天時地利人和，還有木島前輩相助，爲何還會失敗！」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '職員',
+      text: '「報告理事長......木島大佐他......這次沒有成功逃離......被達爾朵一起炸死了......而......而且，這次還有陽界之生人來干擾。」'
+    },
+    {
+      type: 'narration',
+      text: '石理事長一驚，拐杖掉在地上，職員連忙幫忙撿起。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「我石正田......枉活103歲......卻屢屢無法成就大業......如今連木島兄都無法好好照顧好......實在愧對上天......」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「這次是誰在攪局？」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '職員',
+      text: '「是彰師大的學生。」'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「叫小蔡過來，我要跟他討論下次的計劃了。」'
+    },
+    {
+      type: 'narration',
+      text: '職員應聲後離開房間，又只剩石正田一人，他輕撫著茶杯，望著旭日旗。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '石正田',
+      text: '「始発点......距離現在也已經110年了呢......」'
+    },
+    {
+      type: 'narration',
+      text: '小職員走出房間後，在走廊剛好遇上蔡堂祿，他是一個中年男子，頭髮有些斑白，身穿正式西裝皮鞋，整齊筆挺，但是頭髮卻是出乎意料地亂，像個鳥巢一樣，小職員正要說話，蔡堂祿就打斷他。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '蔡堂祿',
+      text: '「我知道，理事長叫我吧？」'
+    },
+    {
+      type: 'narration',
+      text: '小職員點頭稱是，蔡堂祿嘴角上揚，右手提著一袋禾火草，左手拿著掃描器，自信昂首闊步前進，打開門。'
+    },
+    {
+      type: 'dialogue',
+      speaker: '蔡堂祿',
+      text: '「理事長，聽說你有事找我？」'
+    },
+    {
+      type: 'stageclear',
+      stage: 9
+    }
   ]
 ];
 
@@ -1449,7 +1862,7 @@ export const FOOD_DATA: Record<string, Food[]> = {
       emoji: '🍛', 
       lamp: 'green', 
       desc: '香噴噴的鮮嫩雞絲淋上澄澈的雞油汁，無瘴氣污染，乾淨可口！',
-      img: 'https://lh3.googleusercontent.com/d/16IaNI7xks1NXN5BSohtTcvFFSBT6eZYj'
+      img: 'https://lh3.googleusercontent.com/d/1WTCY8bWuYmngmv6ju2TkmfW5wkGMJWar'
     },
     { 
       name: '麻糬', 

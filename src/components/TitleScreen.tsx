@@ -65,7 +65,7 @@ export default function TitleScreen({ onStart, onOpenSettings }: TitleScreenProp
           transition={{ duration: 1.5, delay: 0.6 }}
           className="text-lg md:text-xl text-[#8b7869] tracking-[0.45em] mb-12 pl-[0.45em] font-light"
         >
-          彰化師大篇
+          彰化師大
         </motion.p>
 
         {/* Start button with glowing hover animation and pulsing base */}

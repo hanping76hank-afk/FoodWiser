@@ -137,25 +137,27 @@ export default function HUD({ state, onOpenInventory, locationName, currentStage
                         </motion.span>
                       )}
 
-                      {/* Locked Heart - styled statically in He-Huo-Cao emerald green */}
+                      {/* Locked Heart - animated vibrant emerald green heart */}
                       {isLocked && (
-                        <span
-                          className="text-[10px] text-[#10b981] filter drop-shadow-[0_0_3px_rgba(16,185,129,0.85)] cursor-default relative leading-none"
+                        <motion.span
+                          animate={{ 
+                            scale: [1, 1.15, 0.95, 1.1, 1],
+                            opacity: [1, 0.85, 1]
+                          }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 3.2,
+                            ease: "easeInOut",
+                            delay: i * 0.2,
+                          }}
+                          className="text-[10px] filter drop-shadow-[0_0_4px_rgba(16,185,129,0.95)] cursor-default relative leading-none font-sans"
                           title="陽氣鎖定"
                         >
-                          ♥
-                        </span>
+                          💚
+                        </motion.span>
                       )}
 
-                      {/* Black/Lost Heart (Either empty or damaged) */}
-                      {(isEmpty || isShattering) && !isLocked && (
-                        <span
-                          className="text-[9px] opacity-25 cursor-default leading-none"
-                          title="已扣減生命值"
-                        >
-                          🤍
-                        </span>
-                      )}
+                      {/* No semi-transparent placeholder is shown when hearts are depleted/lost */}
                     </div>
                   );
                 })}
