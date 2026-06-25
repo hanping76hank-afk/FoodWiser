@@ -419,16 +419,30 @@ async function startServer() {
 
           if (driveRes.statusCode === 200) {
             res.setHeader('Content-Type', driveRes.headers['content-type'] || 'image/png');
-            driveRes.pipe(res);
-            try {
-              const cacheStream = fs.createWriteStream(cachePath);
-              cacheStream.on('error', (err) => {
-                console.error(`[Image Proxy Cache Stream Error] fileId ${fileId}:`, err);
-              });
-              driveRes.pipe(cacheStream);
-            } catch (err) {
-              console.error(`[Image Proxy Cache Write Error] fileId ${fileId}:`, err);
-            }
+            
+            const cacheStream = fs.createWriteStream(cachePath);
+            
+            driveRes.on('data', (chunk) => {
+              res.write(chunk);
+              cacheStream.write(chunk);
+            });
+            
+            driveRes.on('end', () => {
+              res.end();
+              cacheStream.end();
+            });
+            
+            driveRes.on('error', (err) => {
+              cacheStream.destroy();
+              console.error(`[Image Proxy Stream Error] fileId ${fileId}:`, err);
+              if (!res.headersSent) {
+                res.status(500).send("Proxy stream error");
+              }
+            });
+            
+            cacheStream.on('error', (err) => {
+              console.error(`[Image Proxy Cache Stream Error] fileId ${fileId}:`, err);
+            });
           } else {
             res.status(driveRes.statusCode || 500).send("Error loading image from Google Drive");
           }
@@ -492,16 +506,30 @@ async function startServer() {
               res.setHeader("Pragma", "no-cache");
               res.setHeader("Expires", "0");
             }
-            driveRes.pipe(res);
-            try {
-              const cacheStream = fs.createWriteStream(cachePath);
-              cacheStream.on('error', (err) => {
-                console.error(`[Music Proxy Cache Stream Error] trackKey ${trackKey}:`, err);
-              });
-              driveRes.pipe(cacheStream);
-            } catch (err) {
-              console.error(`[Music Proxy Cache Write Error] trackKey ${trackKey}:`, err);
-            }
+            
+            const cacheStream = fs.createWriteStream(cachePath);
+            
+            driveRes.on('data', (chunk) => {
+              res.write(chunk);
+              cacheStream.write(chunk);
+            });
+            
+            driveRes.on('end', () => {
+              res.end();
+              cacheStream.end();
+            });
+            
+            driveRes.on('error', (err) => {
+              cacheStream.destroy();
+              console.error(`[Music Proxy Stream Error] trackKey ${trackKey}:`, err);
+              if (!res.headersSent) {
+                res.status(500).send("Proxy stream error");
+              }
+            });
+            
+            cacheStream.on('error', (err) => {
+              console.error(`[Music Proxy Cache Stream Error] trackKey ${trackKey}:`, err);
+            });
           } else {
             res.status(driveRes.statusCode || 500).send("Error loading sound from Google Drive");
           }
